@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des contacts{% endblock %}
+
+{% block body %}
+    <main class="container">
+        <h1>Liste des contact</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Numéro de téléphone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.firstname }}</td>
+                        <td>{{ contact.lastname }}</td>
+                        <td>{{ contact.phoneNumber }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td><a href="{{ path ("app_contact_show", {id: contact.id})}}">Voir</a></td>
+                    </tr>
+                    {% else %}
+                        
+                        <p>Il n'y a pas de contact</p>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}
