@@ -10,7 +10,7 @@
         </nav>
         <h1>Liste des contact</h1>
         <p>
-            <a href="{{path('app_contact_create')}}">Créer nouveau contact</a>
+            <a href="{{path('app_contact_create')}}" class="btn btn-secondary">Créer nouveau contact</a>
         </p>
 
         <table class="table">
@@ -30,7 +30,13 @@
                         <td>{{ contact.lastname }}</td>
                         <td>{{ contact.phoneNumber }}</td>
                         <td>{{ contact.email }}</td>
-                        <td><a href="{{ path ("app_contact_show", {id: contact.id})}}">Voir</a></td>
+                        <td>
+                            <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
+                            <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+                                <input type="submit" value="Supprimer" class="btn btn-danger">
+                            </form>
+                        </td>
                     </tr>
                     {% else %}
                         
