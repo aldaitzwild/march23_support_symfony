@@ -3,8 +3,12 @@
 {% block title %}Liste des contacts{% endblock %}
 
 {% block body %}
-    <main class="container bg-light">
-        <h1 class="text-center">Liste des contact</h1>
+    <main class="container">
+        <nav>
+            <h1>Super Annuaire</h1>
+            <a href="{{path('app_contact_create')}}">Ajouter un contact</a>
+        </nav>
+        <h1>Liste des contact</h1>
         <p>
             <a href="{{path('app_contact_create')}}" class="btn btn-secondary">Créer nouveau contact</a>
         </p>
