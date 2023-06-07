@@ -2,13 +2,19 @@
 
     {% block body %}
 
-        <main class="container">
-            <ul>
-                <li>Prénom : {{contact.firstname}}</li>
-                <li>Nom : {{contact.lastname}}</li>
-                <li>Tel : {{contact.phoneNumber}}</li>
-                <li>Email : {{contact.email}}</li>
-            </ul>
+        <main class="container bg-light">
+            <h2 class="text-center pt-3 fs-1">
+                {{contact.firstname}} - {{contact.lastname}}
+            </h2>
+
+            <div class="mt-5 p-5">
+                <h2>Renseignements : </h2>
+                <ul>
+                    <li>Tel : {{contact.phoneNumber}}</li>
+                    <li>Email : {{contact.email}}</li>
+                </ul>
+            </div>
+            
         </main>
         
     {% endblock %}

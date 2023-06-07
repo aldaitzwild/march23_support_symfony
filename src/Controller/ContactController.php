@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use App\Repository\GroupRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,12 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     #[Route('/contactList', name: 'app_contact_list')]
-    public function index(ContactRepository $contactRepository): Response
+    public function index(GroupRepository $groupRepository): Response
     {
-        $contacts = $contactRepository->findAll();
+        $groups = $groupRepository->findAll();
 
         return $this->render('contact/index.html.twig', [
-            'contacts' => $contacts
+            'groups' => $groups
         ]);
     }
 
