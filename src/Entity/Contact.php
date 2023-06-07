@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,6 +29,14 @@ class Contact
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Email(message: 'L\'email renseigné doit respecter le format Email')]
     private ?string $email = null;
+
+    #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'contacts')]
+    private Collection $contactGroups;
+
+    public function __construct()
+    {
+        $this->contactGroups = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -77,6 +87,33 @@ class Contact
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getContactGroups(): Collection
+    {
+        return $this->contactGroups;
+    }
+
+    public function addContactGroup(Group $contactGroup): self
+    {
+        if (!$this->contactGroups->contains($contactGroup)) {
+            $this->contactGroups->add($contactGroup);
+            $contactGroup->addContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactGroup(Group $contactGroup): self
+    {
+        if ($this->contactGroups->removeElement($contactGroup)) {
+            $contactGroup->removeContact($this);
+        }
 
         return $this;
     }
