@@ -24,10 +24,13 @@ class ContactController extends AbstractController
     }
 
     #[Route('/contact/{id<\d+>}', name: 'app_contact_show')]
-    public function show(Contact $contact): Response
+    public function show(Contact $contact, GroupRepository $groupRepository): Response
     {
+        $groups = $groupRepository->findAll();
+
         return $this->render('contact/show.html.twig', [
-            'contact' => $contact
+            'contact' => $contact,
+            'groups' => $groups
         ]);
     }
 
