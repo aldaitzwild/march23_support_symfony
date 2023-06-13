@@ -33,6 +33,9 @@ class Contact
     #[ORM\ManyToMany(targetEntity: Group::class, mappedBy: 'contacts')]
     private Collection $contactGroups;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoFileName = null;
+
     public function __construct()
     {
         $this->contactGroups = new ArrayCollection();
@@ -114,6 +117,18 @@ class Contact
         if ($this->contactGroups->removeElement($contactGroup)) {
             $contactGroup->removeContact($this);
         }
+
+        return $this;
+    }
+
+    public function getPhotoFileName(): ?string
+    {
+        return $this->photoFileName;
+    }
+
+    public function setPhotoFileName(?string $photoFileName): self
+    {
+        $this->photoFileName = $photoFileName;
 
         return $this;
     }
