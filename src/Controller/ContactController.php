@@ -6,6 +6,8 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use App\Repository\GroupRepository;
+use App\Service\BirthdayManager;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +18,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ContactController extends AbstractController
 {
     #[Route('/contactList', name: 'app_contact_list')]
-    public function index(GroupRepository $groupRepository): Response
+    public function index(GroupRepository $groupRepository, BirthdayManager $birthdayManager): Response
     {
         $groups = $groupRepository->findAll();
 
+        $birthdayPeople = $birthdayManager->getBirthdayPeople();
+
         return $this->render('contact/index.html.twig', [
-            'groups' => $groups
+            'groups' => $groups,
+            'birthdayPeople' => $birthdayPeople
         ]);
     }
 
