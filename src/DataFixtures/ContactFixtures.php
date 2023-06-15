@@ -3,10 +3,12 @@
 namespace App\DataFixtures;
 
 use App\Entity\Contact;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ContactFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -25,7 +27,9 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
             $contact->setFirstname($faker->firstName())
                 ->setLastname($faker->lastName())
                 ->setPhoneNumber($faker->phoneNumber())
-                ->setEmail($faker->email());
+                ->setEmail($faker->email())
+                ->setDateOfBirth(new DateTime($faker->date()))
+                ;
 
             $chosenGroups = $faker->randomElements($groups, rand(1, 2));
             foreach($chosenGroups as $group) {
@@ -33,6 +37,8 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
             }
             
             $manager->persist($contact);
+
+            $this->addReference('contact_' . $i, $contact);
         }
         
         $manager->flush();
