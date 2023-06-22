@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class ContactController extends AbstractController
 {
     #[Route('/contactList', name: 'app_contact_list')]
@@ -42,6 +44,7 @@ class ContactController extends AbstractController
     }
 
     #[Route('/contact/new', name: 'app_contact_create')]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, ContactRepository $contactRepository, SluggerInterface $slugger): Response
     {
         $contact = new Contact;
