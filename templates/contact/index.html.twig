@@ -49,46 +49,52 @@
 
         {% for group in groups %}
 
-            <h2 class="mt-4 sectionTitle" data-bs-toggle="collapse" 
-            data-bs-target="#table{{group.name}}" 
-            aria-expanded="false" 
-            aria-controls="table{{group.name}}">{{group.name}}
-            </h2>
-            <hr>
-            <div class="collapse" id="table{{group.name}}">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Prénom</th>
-                            <th>Nom</th>
-                            <th>Numéro de téléphone</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for contact in group.contacts %}
+            {% if group.name != "Famille" or is_granted('ROLE_ADMIN')%}
+                
+                <h2 class="mt-4 sectionTitle" data-bs-toggle="collapse" 
+                data-bs-target="#table{{group.name}}" 
+                aria-expanded="false" 
+                aria-controls="table{{group.name}}">{{group.name}}
+                </h2>
+                <hr>
+                <div class="collapse" id="table{{group.name}}">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ contact.firstname }}</td>
-                                <td>{{ contact.lastname }}</td>
-                                <td>{{ contact.phoneNumber }}</td>
-                                <td>{{ contact.email }}</td>
-                                <td class="d-flex justify-content-evenly">
-                                    <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
-                                    <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
-                                        <input type="submit" value="Supprimer" class="btn btn-danger">
-                                    </form>
-                                </td>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Numéro de téléphone</th>
+                                <th>Email</th>
+                                <th>Actions</th>
                             </tr>
-                            {% else %}
+                        </thead>
+                        <tbody>
+                            {% for contact in group.contacts %}
+                                <tr>
+                                    <td>{{ contact.firstname }}</td>
+                                    <td>{{ contact.lastname }}</td>
+                                    <td>{{ contact.phoneNumber }}</td>
+                                    <td>{{ contact.email }}</td>
+                                    <td class="d-flex justify-content-evenly">
+                                        <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
+                                        <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+                                            <input type="submit" value="Supprimer" class="btn btn-danger">
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                    
+                                    <p>Il n'y a pas de contact</p>
                                 
-                                <p>Il n'y a pas de contact</p>
-                            
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+            {% endif %}
+
+            
         {% endfor %}
 
         
