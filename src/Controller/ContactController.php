@@ -22,7 +22,7 @@ class ContactController extends AbstractController
     #[Route('/contactList', name: 'app_contact_list')]
     public function index(GroupRepository $groupRepository, BirthdayManager $birthdayManager): Response
     {
-        $groups = $groupRepository->findAll();
+        $groups = $groupRepository->findWithContactsAndCompanies();
 
         $birthdayPeople = $birthdayManager->getBirthdayPeople();
 

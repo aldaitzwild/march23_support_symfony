@@ -65,6 +65,7 @@
                                 <th>Nom</th>
                                 <th>Numéro de téléphone</th>
                                 <th>Email</th>
+                                <th>Société</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -75,6 +76,7 @@
                                     <td>{{ contact.lastname }}</td>
                                     <td>{{ contact.phoneNumber }}</td>
                                     <td>{{ contact.email }}</td>
+                                    <td>{{ contact.company.name }}</td>
                                     <td class="d-flex justify-content-evenly">
                                         <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
                                         <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
