@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Company;
 use App\Entity\Contact;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -29,6 +30,7 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
                 ->setPhoneNumber($faker->phoneNumber())
                 ->setEmail($faker->email())
                 ->setDateOfBirth(new DateTime($faker->date()))
+                ->setCompany($this->getReference('company_' . rand(0, 499)))
                 ;
 
             $chosenGroups = $faker->randomElements($groups, rand(1, 2));
@@ -47,7 +49,8 @@ class ContactFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            GroupFixtures::class
+            GroupFixtures::class,
+            CompanyFixtures::class
         ];
     }
 }

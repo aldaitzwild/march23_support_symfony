@@ -40,6 +40,9 @@ class Contact
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateOfBirth = null;
 
+    #[ORM\ManyToOne(inversedBy: 'employees')]
+    private ?Company $company = null;
+
     public function __construct()
     {
         $this->contactGroups = new ArrayCollection();
@@ -145,6 +148,18 @@ class Contact
     public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
 
         return $this;
     }

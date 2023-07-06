@@ -39,6 +39,20 @@ class GroupRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Group[] Returns an array of Group objects
+     */
+    public function findWithContactsAndCompanies(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->select(['g', 'co', 'cy'])
+            ->join('g.contacts', 'co')
+            ->join('co.company', 'cy')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Group[] Returns an array of Group objects
 //     */
