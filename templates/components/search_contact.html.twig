@@ -1,0 +1,16 @@
+<div{{ attributes }}>
+    <input
+        type="text"
+        data-model="searchBar"
+        placeholder="Recherchez votre contact"
+        class="form-control"
+    >
+
+    {% if computed.contacts|length > 0 %}
+        <ul>
+            {% for contact in computed.contacts %}
+                <li><a href="{{ path ("app_contact_show", {id: contact.id})}}">{{contact.firstname}} {{contact.lastname}}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

@@ -5,42 +5,60 @@
 {% block body %}
     <main class="container bg-light">
         <nav>
-            <h1 class="text-center" id="mainTitle">Super Annuaire</h1>
+            <h1 class="text-center" id="mainTitle"
+            {{ stimulus_controller('symfony/ux-typed', {
+                strings: [
+                    'Bienvenue sur l\'annuaire de votre famille',
+                    'Bienvenue sur l\'annuaire de vos amis',
+                    'Bienvenue sur l\'annuaire de vos contacts professionnels',
+                    'Bienvenue sur l\'annuaire de tout le monde !!',
+                    'Super Annuaire',
+                ],
+                loop: false,
+                showCursor: false,
+            }) }}
+            ></h1>
         </nav>
         <h1 class="text-center mt-5 secondTitle">Joyeux Anniversaire !!</h1>
 
         <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Prénom</th>
-                            <th>Nom</th>
-                            <th>Numéro de téléphone</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for contact in birthdayPeople %}
-                            <tr>
-                                <td>{{ contact.firstname }}</td>
-                                <td>{{ contact.lastname }}</td>
-                                <td>{{ contact.phoneNumber }}</td>
-                                <td>{{ contact.email }}</td>
-                                <td class="d-flex justify-content-evenly">
-                                    <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
-                                    <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
-                                        <input type="submit" value="Supprimer" class="btn btn-danger">
-                                    </form>
-                                </td>
-                            </tr>
-                            {% else %}
-                                
-                                <p>Il n'y a pas de contact</p>
-                            
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Numéro de téléphone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in birthdayPeople %}
+                    <tr>
+                        <td>{{ contact.firstname }}</td>
+                        <td>{{ contact.lastname }}</td>
+                        <td>{{ contact.phoneNumber }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td class="d-flex justify-content-evenly">
+                            <a href="{{ path ("app_contact_show", {id: contact.id})}}" class="btn btn-primary">Voir</a>
+                            <form action="{{ path ("app_contact_delete", {id: contact.id})}}" method="POST">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contact.id) }}">
+                                <input type="submit" value="Supprimer" class="btn btn-danger">
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                        
+                        <p>Il n'y a pas de contact</p>
+                    
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <hr>
+            <h1 class="text-center mt-5 secondTitle">Recherche</h1>
+
+            {{ component('search_contact') }}
+        <hr>
 
         <h1 class="text-center mt-5 secondTitle">Liste des contacts</h1>
         <p>
