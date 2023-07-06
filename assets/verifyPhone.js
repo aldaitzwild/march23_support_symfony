@@ -4,7 +4,7 @@ const resultVerify = document.getElementById('resultVerify');
 
 verifyBtn.addEventListener('click', function () {
     
-    fetch('https://api.veriphone.io/v2/verify?phone=' + phoneNumber.innerHTML + '&key=71716F2138B54913B6C6A6AD206A8EE5')
+    fetch('https://api.veriphone.io/v2/verify?phone=' + phoneNumber.innerHTML + '&key=YOUR_API_KEY')
     .then(response => response.json())
     .then(json => {
         console.log(json.phone_valid);
